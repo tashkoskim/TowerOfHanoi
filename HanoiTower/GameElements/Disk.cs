@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HanoiTower
+namespace HanoiTower.GameElements
 {
     public class Disk
     {
@@ -12,16 +12,16 @@ namespace HanoiTower
         private string _disk;
         public Disk(int size)
         {
-            if(size<0)
+            if (size < 0)
             {
-                Size = Math.Abs(size);
+                size = Math.Abs(size);
             }
             else if (size == 0)
             {
-                Size = 1;
+                size = 1;
             }
-
             Size = size;
+
             GetDisk = createDisk();
         }
 
@@ -30,21 +30,21 @@ namespace HanoiTower
 
         private string createDisk()
         {
-            string peg = "«";
-
-            for (int i=0;i < Size - 1; i++)
-            {
-                peg += "=";
-            }
-
-            peg += "¦";
+            string peg = DesignCharConstants.DiskStartChar;
 
             for (int i = 0; i < Size - 1; i++)
             {
-                peg += "=";
+                peg += DesignCharConstants.DiskStructureChar;
             }
 
-            peg += "»";
+            peg += DesignCharConstants.DiskMiddleChar;
+
+            for (int i = 0; i < Size - 1; i++)
+            {
+                peg += DesignCharConstants.DiskStructureChar;
+            }
+
+            peg += DesignCharConstants.DiskEndChar;
 
             return peg;
         }
