@@ -165,7 +165,8 @@ namespace HanoiTower
                     noSteps++;
 
                     // Game win
-                    if (rods[1].Count == noDisks || rods[2].Count == noDisks)
+                    //if (rods[1].Count == noDisks || rods[2].Count == noDisks)
+                    if (rods[2].Count == noDisks)
                     {
                         Console.WriteLine(DesignCharConstants.LineBreak);
                         Console.WriteLine("# " + noSteps + "\t No.Disks: " + noDisks);
@@ -250,7 +251,10 @@ namespace HanoiTower
 
 
                 GameService.ClearPartOfConsole(4);
-                GameService.PrintRods(source, auxiliary, destination, noDisks);
+                if (noDisks % 2 == 0)
+                    GameService.PrintRods(source, destination, auxiliary, noDisks);
+                else
+                    GameService.PrintRods(source, auxiliary, destination, noDisks);
                 Console.WriteLine(DesignCharConstants.LineBreak);
                 Console.WriteLine("# " + noSteps + "\t No.Disks: " + noDisks);
                 noSteps++;
