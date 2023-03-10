@@ -10,6 +10,12 @@ namespace HanoiTower.GameElements
     // https://theasciicode.com.ar/
     public class DesignCharConstants
     {
+        public static readonly List<string> Header = new()
+        { "\t╔╦╗┌─┐┬ ┬┌─┐┬─┐  ┌─┐┌─┐  ╦ ╦┌─┐┌┐┌┌─┐┬",
+          "\t ║ │ ││││├┤ ├┬┘  │ │├┤   ╠═╣├─┤││││ ││",
+          "\t ╩ └─┘└┴┘└─┘┴└─  └─┘└    ╩ ╩┴ ┴┘└┘└─┘┴"
+        };
+
         // Characters needed for constructing a disk
         public const string DiskStartChar = "«";
         public const string DiskMiddleChar = "¦";
@@ -25,5 +31,7 @@ namespace HanoiTower.GameElements
         public const string SpaceBetweenTowers = "   ";
 
         public const string LineBreak = "----------------------------------------------------------";
+
+        
     }
 }

@@ -11,6 +11,7 @@ namespace HanoiTower
     public class TowerOfHanoi
     {
         private static int noDisks;
+        private static List<string> moves = new();
 
         public static void Play()
         {
@@ -34,6 +35,7 @@ namespace HanoiTower
         private static void TheGame()
         {
             Console.Clear();
+            moves = new();
             GameService.PrintHeader();
 
             // Define the 3 rods at the beginning
@@ -97,10 +99,11 @@ namespace HanoiTower
                     break;
                 }
                 k2 = input[0];
-
+                moves.Add($"{k1} -> {k2}");
                 // These should be valid stack indexes
                 int in1 = GameService.ReturnLabelIndex(k1);
                 int in2 = GameService.ReturnLabelIndex(k2);
+                
 
                 // Clear the console display
                 Console.Clear();
@@ -109,8 +112,16 @@ namespace HanoiTower
 
                 string error = string.Empty;
 
-                // If we have valid index of a label i.e. the number of the stack
-                if (in1 != -1 && in2 != -1 && in1 != in2)
+                if(in1 == in2)
+                {
+                    GameService.PrintRods(rods[0], rods[1], rods[2], noDisks);
+                    error = "!!! You can't take and move disks from the same tower !!!";
+                    Console.WriteLine(DesignCharConstants.LineBreak);
+                    Console.WriteLine(error);
+                    moves.Add(error);
+                    noSteps++;
+                }
+                else if (in1 != -1 && in2 != -1 && in1 != in2) // If we have valid index of a label i.e. the number of the stack
                 {
                     // If we took disk from the tower with index 'in1'...
                     if (rods[in1].Count > 0)
@@ -132,7 +143,6 @@ namespace HanoiTower
                             else
                             {
                                 error = "!!! You can't move bigger on top of a smaller disk !!!";
-
                             }
                         }
 
@@ -140,7 +150,6 @@ namespace HanoiTower
                     else
                     {
                         error = "!!! You can't take disk from an empty tower !!!";
-
                     }
 
                     GameService.PrintRods(rods[0], rods[1], rods[2], noDisks);
@@ -148,6 +157,7 @@ namespace HanoiTower
                     {
                         Console.WriteLine(DesignCharConstants.LineBreak);
                         Console.WriteLine(error);
+                        moves.Add(error);
                     }
                     noSteps++;
 
@@ -157,10 +167,12 @@ namespace HanoiTower
                         Console.WriteLine(DesignCharConstants.LineBreak);
                         Console.WriteLine("# " + noSteps + "\t No.Disks: " + noDisks);
                         GameService.YouWonText("Y O U");
+                        LogService.ToFileShort(moves, "User", noDisks, noSteps);
                         break;
                     }
 
                 } // END for if(in1 != -1 && in2 != -1)
+
 
             }
         }
@@ -186,20 +198,51 @@ namespace HanoiTower
             Console.WriteLine(DesignCharConstants.LineBreak);
             Console.WriteLine("# 0\t No.Disks: " + noDisks);
             Thread.Sleep(1000);
+            int step1 = 0, step2 = 0;
             int totalMoves = (int)Math.Pow(2, n) - 1;
             for (int i = 1; i <= totalMoves; i++)
             {
                 if (i % 3 == 1)
                 {
-                    MoveDisk(source, destination);
+                    if (noDisks % 2 == 0)
+                    {
+                        step1 = 1;
+                        step2 = 2;
+                    }
+                    else
+                    {
+                        step1 = 1;
+                        step2 = 3;
+                    }
+                    MoveDisk(source, destination, step1, step2);
                 }
                 else if (i % 3 == 2)
                 {
-                    MoveDisk(source, auxiliary);
+                    if (noDisks % 2 == 0)
+                    {
+                        step1 = 1;
+                        step2 = 3;
+                    }
+                    else
+                    {
+                        step1 = 1;
+                        step2 = 2;
+                    }
+                    MoveDisk(source, auxiliary, step1, step2);
                 }
                 else if (i % 3 == 0)
                 {
-                    MoveDisk(destination, auxiliary);
+                    if (noDisks % 2 == 0)
+                    {
+                        step1 = 2;
+                        step2 = 3;
+                    }
+                    else
+                    {
+                        step1 = 3;
+                        step2 = 2;
+                    }
+                    MoveDisk(destination, auxiliary, step1, step2);
                 }
 
 
@@ -212,27 +255,34 @@ namespace HanoiTower
 
             }
             GameService.YouWonText("T H E   C O M P U T E R");
+            LogService.ToFileShort(moves, "Computer", noDisks, noSteps-1);
         }
 
         // Method that is used when the computer play the game for moving the disks
-        static void MoveDisk(Stack<int> source, Stack<int> destination)
+        static void MoveDisk(Stack<int> source, Stack<int> destination, int s1, int s2)
         {
             if(destination.Count == 0)
             {
                 int disk = source.Pop();
                 destination.Push(disk);
+                moves.Add($"{s1} -> {s2}");
             }else if(source.Count == 0)
             {
                 int disk = destination.Pop();
                 source.Push(disk);
-            }else if(destination.Peek() < source.Peek())
+                moves.Add($"{s2} -> {s1}");
+            }
+            else if(destination.Peek() < source.Peek())
             {
                 int disk = destination.Pop();
                 source.Push(disk);
-            }else if (destination.Peek() > source.Peek())
+                moves.Add($"{s2} -> {s1}");
+            }
+            else if (destination.Peek() > source.Peek())
             {
                 int disk = source.Pop();
                 destination.Push(disk);
+                moves.Add($"{s1} -> {s2}");
             }
         }
         #endregion

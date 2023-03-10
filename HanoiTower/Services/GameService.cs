@@ -322,9 +322,10 @@ namespace HanoiTower.Services
         // https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
         public static void PrintHeader()
         {
-            Console.WriteLine("\t╔╦╗┌─┐┬ ┬┌─┐┬─┐  ┌─┐┌─┐  ╦ ╦┌─┐┌┐┌┌─┐┬");
-            Console.WriteLine("\t ║ │ ││││├┤ ├┬┘  │ │├┤   ╠═╣├─┤││││ ││");
-            Console.WriteLine("\t ╩ └─┘└┴┘└─┘┴└─  └─┘└    ╩ ╩┴ ┴┘└┘└─┘┴");
+            foreach(string s in DesignCharConstants.Header)
+            {
+                Console.WriteLine(s);
+            }
             Console.WriteLine();
             Console.WriteLine();
         }
