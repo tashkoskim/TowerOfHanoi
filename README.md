@@ -26,7 +26,7 @@ Screenshot of the log file (with some errors) for towers with 3 disks:
 ![Log](https://github.com/tashkoskim/TowerOfHanoi/blob/master/HanoiTower/ScreenShots/HanoiTower_Log.png?raw=true)  
 
 ### GIF demo of the game
-The demo is how to computer play the game for towers with 4 disks:  
+The demo is how the computer play the game for towers with 4 disks:  
 ![ComputerPlay](https://github.com/tashkoskim/TowerOfHanoi/blob/master/HanoiTower/ScreenShots/HanoiTower_ComputerPlay.gif?raw=true) 
 
 
