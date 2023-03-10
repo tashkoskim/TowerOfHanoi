@@ -111,8 +111,16 @@ namespace HanoiTower
                 GameService.PrintHeader();
 
                 string error = string.Empty;
-
-                if(in1 == in2)
+                if (in1 == -1 || in2 == -1)
+                {
+                    GameService.PrintRods(rods[0], rods[1], rods[2], noDisks);
+                    error = "!!! Invalid input for tower !!!";
+                    Console.WriteLine(DesignCharConstants.LineBreak);
+                    Console.WriteLine(error);
+                    moves.Add(error);
+                    noSteps++;
+                }
+                else if (in1 == in2)
                 {
                     GameService.PrintRods(rods[0], rods[1], rods[2], noDisks);
                     error = "!!! You can't take and move disks from the same tower !!!";
