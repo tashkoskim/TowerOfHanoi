@@ -1,7 +1,5 @@
-﻿
-using HanoiTower;
+﻿using HanoiTower;
 
-
-    TowerOfHanoi.Play();
+TowerOfHanoi.Play();
 
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace HanoiTower.GameElements
 {
     // During choosing which ASCII characters to use, this website helped me a lot:
